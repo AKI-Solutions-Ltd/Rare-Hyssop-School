@@ -151,26 +151,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php
 							echo @$response;
 							?>
-                            <form action="#" class="contact-form mt-4">
+                            <form action="contact.php" method="post" class="contact-form mt-4">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Name" required>
+                                            <input type="text" class="form-control" placeholder="Enter Your Name" id="name" name="name" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Enter Your Email" required>
+                                            <input type="email" class="form-control" placeholder="Enter Your Email" id="email" name="email" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="phone_number" placeholder="Enter Phone Number" required>
+                                            <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="subject" class="form-control" placeholder="Enter Subject">
+                                            <input type="subject" class="form-control" placeholder="Enter Subject" id="subject" name="subject">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
