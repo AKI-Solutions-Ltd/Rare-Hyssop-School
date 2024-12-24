@@ -20,6 +20,44 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = htmlspecialchars(strip_tags($_POST['name']));
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $phone = htmlspecialchars(strip_tags($_POST['phone']));
+    $subject = htmlspecialchars(strip_tags($_POST['subject']));
+    $message = htmlspecialchars(strip_tags($_POST['message']));
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format.");
+    }
+    if (empty($name) || empty($email) || empty($phone) || empty($message)) {
+        die("All fields are required.");
+    }
+
+    $to = "rarehyssopschools@gmail.com";
+    $email_subject = !empty($subject) ? $subject : "New Contact Form Submission";
+    $email_body = "
+        Name: $name\n
+        Email: $email\n
+        Phone: $phone\n
+        Message: $message
+    ";
+    $headers = "From: $email";
+
+    if (mail($to, $email_subject, $email_body, $headers)) {
+        $response= echo "Message sent successfully!";
+    } else {
+       $response= echo "Failed to send message. Please try again.";
+    }
+} else {
+   $response = echo "Invalid request method.";
+}
+?>
+
+
+
+
 <body>
     <!-- Start Header -->
     <header>
@@ -110,26 +148,29 @@
                     <div class="main-content">
                         <div class="contact-from-wrapper-2">
                             <h2 class="section-heading" id="contact">Get In Touch</h2>
-                            <form action="contact.php" method="post" class="contact-form mt-4">
+                            <?php
+							echo @$response;
+							?>
+                            <form action="#" class="contact-form mt-4">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Name" id="name" name="name" required>
+                                            <input type="text" class="form-control" placeholder="Enter Your Name" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Enter Your Email" id="email" name="email" required>
+                                            <input type="email" class="form-control" placeholder="Enter Your Email" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" required>
+                                            <input type="text" class="form-control" id="phone_number" placeholder="Enter Phone Number" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="subject" class="form-control" placeholder="Enter Subject" id="message" name="message">
+                                            <input type="subject" class="form-control" placeholder="Enter Subject">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
